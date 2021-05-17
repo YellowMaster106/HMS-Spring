@@ -1,12 +1,11 @@
 package com.health.controller;
 
 import com.health.pojo.TbUser;
+import com.health.result.LoginResult;
 import com.health.service.userService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,8 +21,13 @@ public class userController {
         return userService.findAllUser();
     }
 
-    @PatchMapping("/insertUser")
+    @PostMapping("/insertUser")
     public void insertUser(TbUser tbUser){
         userService.insertUser(tbUser);
+    }
+
+    @RequestMapping("/checkUser")
+    public LoginResult checkUser(@RequestBody TbUser tbUser){
+        return userService.checkUser(tbUser);
     }
 }
