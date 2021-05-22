@@ -23,8 +23,12 @@ public class userServiceImpl implements userService {
 
     @Override
     public void insertUser(TbUser tbUser) {
-        tbUserMapper.insert(tbUser);
-        System.out.println("ok");
+        TbUserExample tbUserExample = new TbUserExample();
+        TbUserExample.Criteria criteria = tbUserExample.createCriteria();
+        criteria.andPhonenumberEqualTo(tbUser.getPhonenumber());
+        if(tbUserMapper.selectByExample(tbUserExample).size() == 0) {
+            tbUserMapper.insert(tbUser);
+        }
     }
 
     @Override
