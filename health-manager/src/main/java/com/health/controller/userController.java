@@ -1,10 +1,11 @@
 package com.health.controller;
 
-import com.health.pojo.TbResident;
-import com.health.pojo.TbUser;
-import com.health.pojo.TbUserExample;
+import com.health.pojo.*;
+import com.health.request.DoctorUserRequest;
 import com.health.request.ResidentUserRequest;
 import com.health.result.LoginResult;
+import com.health.service.checkService;
+import com.health.service.doctorService;
 import com.health.service.residentService;
 import com.health.service.userService;
 import org.json.JSONObject;
@@ -23,6 +24,12 @@ public class userController {
     @Autowired
     private residentService residentService;
 
+    @Autowired
+    private doctorService doctorService;
+
+    @Autowired
+    private checkService checkService;
+
 
     @GetMapping("/loadUser")
     public List<TbUser> findAllUser(){
@@ -30,7 +37,7 @@ public class userController {
     }
 
     @PostMapping("/insertResidentUser")
-    public int insertUser(@RequestBody ResidentUserRequest residentUserRequest){
+    public int insertResidentUser(@RequestBody ResidentUserRequest residentUserRequest){
        TbUser tbUser = new TbUser();
        tbUser.setIdIdentity(residentUserRequest.getIdIdentity());
        tbUser.setKeyword(residentUserRequest.getKeyword());
@@ -42,9 +49,7 @@ public class userController {
        if(tbUser.getId() != null) {
            tbResident.setId(tbUser.getId());
            tbResident.setIdAddress(residentUserRequest.getIdAddress());
-           System.out.println(residentUserRequest.getIdAddress());
            tbResident.setName(residentUserRequest.getName());
-           System.out.println(residentUserRequest.getName());
            residentService.insertResident(tbResident);
            return 0;
        }
@@ -53,7 +58,33 @@ public class userController {
        }
     }
 
-    @RequestMapping("/checkUser")
+    @PostMapping("/insertDoctorUser")
+    public int insertDoctorUser(@RequestBody DoctorUserRequest doctorUserRequest){
+        TbUser tbUser = new TbUser();
+        tbUser.setIdIdentity(doctorUserRequest.getIdIdentity());
+        tbUser.setKeyword(doctorUserRequest.getKeyword());
+        tbUser.setPhonenumber(doctorUserRequest.getPhonenumber());
+        userService.insertUser(tbUser);
+
+        TbDoctor tbDoctor = new TbDoctor();
+        if(tbUser.getId() != null) {
+            tbDoctor.setId(tbUser.getId());
+            tbDoctor.setName(doctorUserRequest.getName());
+            tbDoctor.setIdHospital(doctorUserRequest.getIdHospital());
+            tbDoctor.setStatus(0);
+            doctorService.insertDocotor(tbDoctor);
+        }else {
+            return 1;
+        }
+
+        TbCheck tbCheck = new TbCheck();
+        tbCheck.setIdDoctor(tbUser.getId());
+        checkService.insertCheck(tbCheck);
+        return 0;
+
+    }
+
+    @PostMapping("/checkUser")
     public LoginResult checkUser(@RequestBody TbUser tbUser){
         return userService.checkUser(tbUser);
     }

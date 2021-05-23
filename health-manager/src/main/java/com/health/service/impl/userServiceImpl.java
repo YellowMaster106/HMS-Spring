@@ -1,6 +1,9 @@
 package com.health.service.impl;
 
+import com.health.mapper.TbDoctorMapper;
 import com.health.mapper.TbUserMapper;
+import com.health.pojo.TbDoctor;
+import com.health.pojo.TbDoctorExample;
 import com.health.pojo.TbUser;
 import com.health.pojo.TbUserExample;
 import com.health.result.LoginResult;
@@ -15,6 +18,9 @@ public class userServiceImpl implements userService {
 
     @Autowired
     private TbUserMapper tbUserMapper;
+
+    @Autowired
+    private TbDoctorMapper tbDoctorMapper;
 
     @Override
     public List<TbUser> findAllUser() {
@@ -45,8 +51,24 @@ public class userServiceImpl implements userService {
         if(tbUserMapper.selectByExample(tbUserExample).size() != 0) {
             tbUser2 = tbUserMapper.selectByExample(tbUserExample).get(0);
             if(tbUser2.getKeyword().equals(tbUser.getKeyword())){
-                loginResult.setStatus(200);                 //登陆成功
-                loginResult.setIdentity(tbUser2.getIdIdentity());
+                if(tbUser2.getIdIdentity().equals(2)){//判断是否为医生，看是否审核通过
+                    TbDoctorExample tbDoctorExample = new TbDoctorExample();
+                    TbDoctorExample.Criteria criteria2 = tbDoctorExample.createCriteria();
+                    criteria2.andIdEqualTo(tbUser2.getId());
+                    TbDoctor tbDoctor = new TbDoctor();
+                    tbDoctor = tbDoctorMapper.selectByExample(tbDoctorExample).get(0);
+                    if(tbDoctor.getStatus().equals(0)){
+                        loginResult.setStatus(501);                 //医生未认证
+                    }
+                    else{
+                        loginResult.setStatus(200);                 //医生登陆成功
+                        loginResult.setIdentity(tbUser2.getIdIdentity());
+                    }
+                }
+                else {
+                    loginResult.setStatus(200);                 //登陆成功
+                    loginResult.setIdentity(tbUser2.getIdIdentity());
+                }
             }
             else{
                 loginResult.setStatus(500);                 //密码错误
