@@ -24,6 +24,9 @@ public class checkServiceImpl implements checkService {
     @Autowired
     private TbDoctorMapper tbDoctorMapper;
 
+    @Autowired
+    private TbUserMapper tbUserMapper;
+
     @Override
     public int checkDoctor(TbCheck tbCheck) {
         TbDoctor tbDoctor = new TbDoctor();
@@ -38,8 +41,20 @@ public class checkServiceImpl implements checkService {
     }
 
     @Override
+    public void refuseDoctor(TbCheck tbCheck) {
+        tbDoctorMapper.deleteByPrimaryKey(tbCheck.getIdDoctor());
+        tbCheckMapper.deleteByPrimaryKey(tbCheck.getIdDoctor());
+        tbUserMapper.deleteByPrimaryKey(tbCheck.getIdDoctor());
+    }
+
+    @Override
     public void insertCheck(TbCheck tbCheck) {
         tbCheckMapper.insert(tbCheck);
+    }
+
+    @Override
+    public List<TbCheck> findAllCheck() {
+        return tbCheckMapper.selectByExample(null);
     }
 
 }

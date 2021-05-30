@@ -10,5 +10,7 @@ import java.util.List;
 @Service
 public interface checkService {
     public int checkDoctor(TbCheck tbCheck);
+    public void refuseDoctor(TbCheck tbCheck);
     public void insertCheck(TbCheck tbCheck);
+    public List<TbCheck> findAllCheck();
 }

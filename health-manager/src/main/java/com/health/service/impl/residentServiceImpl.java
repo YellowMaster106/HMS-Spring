@@ -23,4 +23,11 @@ public class residentServiceImpl implements residentService {
     public void insertResident(TbResident tbResident) {
         tbResidentMapper.insert(tbResident);
     }
+
+    @Override
+    public List<TbResident> findAllResident() {
+        return tbResidentMapper.selectByExample(null);
+    }
+
+
 }

@@ -6,6 +6,8 @@ import com.health.service.checkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class checkController {
@@ -16,5 +18,15 @@ public class checkController {
     @PostMapping("/checkDoctor")
     public int checkDoctor(@RequestBody TbCheck tbCheck){
         return checkService.checkDoctor(tbCheck);
+    }
+
+    @PostMapping("/refuseDoctor")
+    public void refuseDoctor(@RequestBody TbCheck tbCheck){
+        checkService.refuseDoctor(tbCheck);
+    }
+
+    @GetMapping("/loadCheck")
+    public List<TbCheck> findAllCheck(){
+        return checkService.findAllCheck();
     }
 }

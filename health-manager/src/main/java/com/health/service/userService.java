@@ -11,4 +11,5 @@ public interface userService {
     public List<TbUser> findAllUser();
     public void insertUser(TbUser tbUser);
     public LoginResult checkUser(TbUser tbUser);
+    public void DeleteUser(TbUser tbUser);
 }

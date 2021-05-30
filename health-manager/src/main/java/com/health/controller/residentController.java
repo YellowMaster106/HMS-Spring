@@ -5,10 +5,7 @@ import com.health.pojo.TbResident;
 import com.health.service.addressService;
 import com.health.service.residentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +20,11 @@ public class residentController {
     public void insertResident(@RequestBody TbResident tbResident){
         residentService.insertResident(tbResident);
     }
+
+    @GetMapping("/loadResident")
+    public List<TbResident> findAllResident(){
+        return residentService.findAllResident();
+    };
+
+
 }

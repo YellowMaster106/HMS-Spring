@@ -18,4 +18,12 @@ public class doctorServiceImpl implements doctorService {
     public void insertDocotor(TbDoctor tbDoctor) {
         tbDoctorMapper.insert(tbDoctor);
     }
+
+    @Override
+    public List<TbDoctor> findAllDoctor() {
+        return tbDoctorMapper.selectByExample(null);
+
+    }
+
+
 }

@@ -1,11 +1,9 @@
 package com.health.service.impl;
 
 import com.health.mapper.TbDoctorMapper;
+import com.health.mapper.TbResidentMapper;
 import com.health.mapper.TbUserMapper;
-import com.health.pojo.TbDoctor;
-import com.health.pojo.TbDoctorExample;
-import com.health.pojo.TbUser;
-import com.health.pojo.TbUserExample;
+import com.health.pojo.*;
 import com.health.result.LoginResult;
 import com.health.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,9 @@ public class userServiceImpl implements userService {
 
     @Autowired
     private TbDoctorMapper tbDoctorMapper;
+
+    @Autowired
+    private TbResidentMapper tbResidentMapper;
 
     @Override
     public List<TbUser> findAllUser() {
@@ -62,11 +63,14 @@ public class userServiceImpl implements userService {
                     }
                     else{
                         loginResult.setStatus(200);                 //医生登陆成功
+                        loginResult.setId(tbUser2.getId());
+                        loginResult.setName(tbDoctor.getName());
                         loginResult.setIdentity(tbUser2.getIdIdentity());
                     }
                 }
                 else {
                     loginResult.setStatus(200);                 //登陆成功
+                    loginResult.setId(tbUser2.getId());
                     loginResult.setIdentity(tbUser2.getIdIdentity());
                 }
             }
@@ -78,5 +82,15 @@ public class userServiceImpl implements userService {
             loginResult.setStatus(400);                     //账号错误
         }
         return loginResult;
+    }
+
+    @Override
+    public void DeleteUser(TbUser tbUser) {
+        tbUserMapper.deleteByPrimaryKey(tbUser.getId());
+        if(tbUser.getIdIdentity() == 1){
+            tbResidentMapper.deleteByPrimaryKey(tbUser.getId());
+        }else if (tbUser.getIdIdentity() == 2){
+            tbDoctorMapper.deleteByPrimaryKey(tbUser.getId());
+        }
     }
 }

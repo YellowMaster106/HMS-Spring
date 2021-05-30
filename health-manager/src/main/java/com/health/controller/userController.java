@@ -88,4 +88,9 @@ public class userController {
     public LoginResult checkUser(@RequestBody TbUser tbUser){
         return userService.checkUser(tbUser);
     }
+
+    @PostMapping("/deleteUser")
+    public void deleteUser(@RequestBody TbUser tbUser){
+        userService.DeleteUser(tbUser);
+    }
 }
