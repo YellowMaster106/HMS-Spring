@@ -29,5 +29,10 @@ public class residentServiceImpl implements residentService {
         return tbResidentMapper.selectByExample(null);
     }
 
+    @Override
+    public TbResident findResident(int id) {
+        return tbResidentMapper.selectByPrimaryKey(id);
+    }
+
 
 }

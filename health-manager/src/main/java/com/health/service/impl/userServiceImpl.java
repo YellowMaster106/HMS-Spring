@@ -4,6 +4,7 @@ import com.health.mapper.TbDoctorMapper;
 import com.health.mapper.TbResidentMapper;
 import com.health.mapper.TbUserMapper;
 import com.health.pojo.*;
+import com.health.result.AllUpdateResult;
 import com.health.result.LoginResult;
 import com.health.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,15 @@ public class userServiceImpl implements userService {
         }else if (tbUser.getIdIdentity() == 2){
             tbDoctorMapper.deleteByPrimaryKey(tbUser.getId());
         }
+    }
+
+    @Override
+    public void UpdateUser(TbUser tbUser) {
+        tbUserMapper.updateByPrimaryKey(tbUser);
+    }
+
+    @Override
+    public TbUser findUser(int id) {
+        return tbUserMapper.selectByPrimaryKey(id);
     }
 }

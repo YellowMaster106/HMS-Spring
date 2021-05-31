@@ -11,4 +11,5 @@ import java.util.List;
 public interface residentService {
     public void insertResident(TbResident tbResident);
     public List<TbResident> findAllResident();
+    public TbResident findResident(int id);
 }

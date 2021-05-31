@@ -25,5 +25,10 @@ public class doctorServiceImpl implements doctorService {
 
     }
 
+    @Override
+    public TbDoctor findDoctor(int id) {
+        return tbDoctorMapper.selectByPrimaryKey(id);
+    }
+
 
 }

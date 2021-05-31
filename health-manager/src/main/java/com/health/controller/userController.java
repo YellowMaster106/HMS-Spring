@@ -3,6 +3,7 @@ package com.health.controller;
 import com.health.pojo.*;
 import com.health.request.DoctorUserRequest;
 import com.health.request.ResidentUserRequest;
+import com.health.result.AllUpdateResult;
 import com.health.result.LoginResult;
 import com.health.service.checkService;
 import com.health.service.doctorService;
@@ -92,5 +93,17 @@ public class userController {
     @PostMapping("/deleteUser")
     public void deleteUser(@RequestBody TbUser tbUser){
         userService.DeleteUser(tbUser);
+    }
+
+    @PostMapping("/updateUser")
+    public void updateUser(@RequestBody TbUser tbUser){
+        userService.UpdateUser(tbUser);
+    }
+
+    @PostMapping("/findUser")
+    public AllUpdateResult findUser(@RequestBody TbUser tbUser){
+
+        AllUpdateResult allUpdateResult = new AllUpdateResult();
+        return allUpdateResult;
     }
 }

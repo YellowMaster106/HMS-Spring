@@ -18,4 +18,15 @@ public class contentServiceImpl implements contentService {
     public List<TbContent> findAllContent() {
         return tbContentMapper.selectByExample(null);
     }
+
+    @Override
+    public void deleteContent(TbContent tbContent) {
+        tbContentMapper.deleteByPrimaryKey(tbContent.getId());
+    }
+
+    @Override
+    public TbContent findContent(TbContent tbContent) {
+        return tbContentMapper.selectByPrimaryKey(tbContent.getId());
+    }
+
 }
