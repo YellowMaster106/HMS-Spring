@@ -2,6 +2,7 @@ package com.health.controller;
 
 import com.health.pojo.TbCheck;
 import com.health.pojo.TbResident;
+import com.health.result.AllUpdateResult;
 import com.health.service.checkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class checkController {
     }
 
     @GetMapping("/loadCheck")
-    public List<TbCheck> findAllCheck(){
+    public List<AllUpdateResult> findAllCheck(){
         return checkService.findAllCheck();
     }
 }

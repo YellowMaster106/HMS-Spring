@@ -37,6 +37,17 @@ public class LoginResult {
     private String name;
     private int identity;
     private String phonenumber;
+    private String identityName;
+
+    public String getIdentityName() {
+        return identityName;
+    }
+
+    public void setIdentityName(String identityName) {
+        this.identityName = identityName;
+    }
+
+
 
     public int getId() {
         return id;

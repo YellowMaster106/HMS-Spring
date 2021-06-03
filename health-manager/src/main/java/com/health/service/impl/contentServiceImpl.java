@@ -29,4 +29,9 @@ public class contentServiceImpl implements contentService {
         return tbContentMapper.selectByPrimaryKey(tbContent.getId());
     }
 
+    @Override
+    public void insertContent(TbContent tbContent) {
+        tbContentMapper.insert(tbContent);
+    }
+
 }

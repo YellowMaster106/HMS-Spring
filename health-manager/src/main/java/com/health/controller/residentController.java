@@ -26,5 +26,8 @@ public class residentController {
         return residentService.findAllResident();
     };
 
-
+    @RequestMapping("/findResident")
+    public TbResident findResident(@RequestBody TbResident tbResident){
+        return residentService.findResident(tbResident.getId());
+    }
 }

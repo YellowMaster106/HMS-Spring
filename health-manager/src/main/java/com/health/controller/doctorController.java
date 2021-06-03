@@ -2,6 +2,7 @@ package com.health.controller;
 
 import com.health.pojo.TbDoctor;
 import com.health.pojo.TbResident;
+import com.health.result.AllUpdateResult;
 import com.health.service.doctorService;
 import com.health.service.residentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,14 @@ public class doctorController {
     private doctorService doctorService;
 
     @GetMapping("/loadDoctor")
-    public List<TbDoctor> findAllResident(){
+    public List<AllUpdateResult> findAllDoctor(){
         return doctorService.findAllDoctor();
     };
+
+    @RequestMapping("/findDoctor")
+    public TbDoctor findDoctor(@RequestBody TbDoctor tbDoctor){
+        return doctorService.findDoctor(tbDoctor.getId());
+    }
 
 
 }

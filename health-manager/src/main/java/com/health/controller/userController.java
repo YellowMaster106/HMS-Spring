@@ -33,7 +33,7 @@ public class userController {
 
 
     @GetMapping("/loadUser")
-    public List<TbUser> findAllUser(){
+    public List<AllUpdateResult> findAllUser(){
         return userService.findAllUser();
     }
 

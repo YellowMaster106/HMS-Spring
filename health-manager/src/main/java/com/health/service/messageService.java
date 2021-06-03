@@ -11,4 +11,6 @@ import java.util.List;
 public interface messageService {
     public List<TbMessage> findMessage(TbMessage tbMessage);
     public List<TbMessage> findMessage2(TbMessage tbMessage);
+    public List<TbMessage> findMessage3(TbMessage tbMessage);
+    public void insertMessage(TbMessage tbMessage);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface userService {
-    public List<TbUser> findAllUser();
+    public List<AllUpdateResult> findAllUser();
     public void insertUser(TbUser tbUser);
     public LoginResult checkUser(TbUser tbUser);
     public void DeleteUser(TbUser tbUser);

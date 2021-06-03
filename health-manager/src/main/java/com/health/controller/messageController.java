@@ -5,9 +5,7 @@ import com.health.pojo.TbMessage;
 import com.health.service.hospitalService;
 import com.health.service.messageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +16,20 @@ public class messageController {
     @Autowired
     private messageService messageService;
 
-//    @GetMapping("/loadMessage")
-//    public List<TbMessage> findAllHospital(){
-//        return messageService.findMessage();
-//    }
+    @RequestMapping("/loadSuggestion")
+    public List<TbMessage> findSuggestion(@RequestBody TbMessage tbMessage){
+        tbMessage.setType(1);
+        return messageService.findMessage(tbMessage);
+    }
+
+    @RequestMapping("/loadMessage")
+    public List<TbMessage> findMessage(@RequestBody TbMessage tbMessage){
+        tbMessage.setType(2);
+        return messageService.findMessage2(tbMessage);
+    }
+
+    @RequestMapping("/insertMessage")
+    public void insertMessage(@RequestBody TbMessage tbMessage){
+        messageService.insertMessage(tbMessage);
+    }
 }

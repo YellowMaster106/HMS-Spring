@@ -10,4 +10,5 @@ public interface contentService {
     public List<TbContent> findAllContent();
     public void deleteContent(TbContent tbContent);
     public TbContent findContent(TbContent tbContent);
+    public void insertContent(TbContent tbContent);
 }

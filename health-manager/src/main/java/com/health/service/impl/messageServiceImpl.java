@@ -26,7 +26,6 @@ public class messageServiceImpl implements messageService {
         TbMessageExample.Criteria criteria = tbMessageExample.createCriteria();
         criteria.andTypeEqualTo(tbMessage.getType());
         criteria.andIdResidentEqualTo(tbMessage.getIdResident());
-        criteria.andIdDoctorEqualTo(tbMessage.getIdDoctor());
 
         return tbMessageMapper.selectByExample(tbMessageExample);
     }
@@ -39,5 +38,21 @@ public class messageServiceImpl implements messageService {
         criteria.andIdDoctorEqualTo(tbMessage.getIdDoctor());
 
         return tbMessageMapper.selectByExample(tbMessageExample);
+    }
+
+    @Override
+    public List<TbMessage> findMessage3(TbMessage tbMessage) {
+        TbMessageExample tbMessageExample = new TbMessageExample();
+        TbMessageExample.Criteria criteria = tbMessageExample.createCriteria();
+        criteria.andTypeEqualTo(tbMessage.getType());
+        criteria.andIdResidentEqualTo(tbMessage.getIdResident());
+        criteria.andIdDoctorEqualTo(tbMessage.getIdDoctor());
+
+        return tbMessageMapper.selectByExample(tbMessageExample);
+    }
+
+    @Override
+    public void insertMessage(TbMessage tbMessage) {
+        tbMessageMapper.insert(tbMessage);
     }
 }

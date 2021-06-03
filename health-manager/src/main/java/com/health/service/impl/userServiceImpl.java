@@ -10,6 +10,7 @@ import com.health.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,8 +26,27 @@ public class userServiceImpl implements userService {
     private TbResidentMapper tbResidentMapper;
 
     @Override
-    public List<TbUser> findAllUser() {
-        return tbUserMapper.selectByExample(null);
+    public List<AllUpdateResult> findAllUser() {
+        List<AllUpdateResult> result = new ArrayList<>();
+        List<TbUser> userlist = tbUserMapper.selectByExample(null);
+        for(int i = 0;i < userlist.size();i++){
+            AllUpdateResult re = new AllUpdateResult();
+            re.setId(userlist.get(i).getId());
+            re.setKeyword(userlist.get(i).getKeyword());
+            re.setPhonenumber(userlist.get(i).getPhonenumber());
+            re.setIdIdentity(userlist.get(i).getIdIdentity());
+            if(re.getIdIdentity() == 1) {
+                re.setName(tbResidentMapper.selectByPrimaryKey(userlist.get(i).getId()).getName());
+                re.setIdentity("居民");
+            }else if(re.getIdIdentity() == 2) {
+                re.setName(tbDoctorMapper.selectByPrimaryKey(userlist.get(i).getId()).getName());
+                re.setIdentity("医生");
+            }else{
+                continue;
+            }
+            result.add(re);
+        }
+        return result;
     }
 
     @Override
@@ -54,11 +74,7 @@ public class userServiceImpl implements userService {
             tbUser2 = tbUserMapper.selectByExample(tbUserExample).get(0);
             if(tbUser2.getKeyword().equals(tbUser.getKeyword())){
                 if(tbUser2.getIdIdentity().equals(2)){//判断是否为医生，看是否审核通过
-                    TbDoctorExample tbDoctorExample = new TbDoctorExample();
-                    TbDoctorExample.Criteria criteria2 = tbDoctorExample.createCriteria();
-                    criteria2.andIdEqualTo(tbUser2.getId());
-                    TbDoctor tbDoctor = new TbDoctor();
-                    tbDoctor = tbDoctorMapper.selectByExample(tbDoctorExample).get(0);
+                    TbDoctor tbDoctor = tbDoctorMapper.selectByPrimaryKey(tbUser2.getId());
                     if(tbDoctor.getStatus().equals(0)){
                         loginResult.setStatus(501);                 //医生未认证
                     }
@@ -67,12 +83,22 @@ public class userServiceImpl implements userService {
                         loginResult.setId(tbUser2.getId());
                         loginResult.setName(tbDoctor.getName());
                         loginResult.setIdentity(tbUser2.getIdIdentity());
+                        loginResult.setIdentityName("医生");
                     }
                 }
-                else {
+                else if(tbUser2.getIdIdentity().equals(1)){
+                    TbResident tbResident = tbResidentMapper.selectByPrimaryKey(tbUser2.getId());
                     loginResult.setStatus(200);                 //登陆成功
                     loginResult.setId(tbUser2.getId());
                     loginResult.setIdentity(tbUser2.getIdIdentity());
+                    loginResult.setName(tbResident.getName());
+                    loginResult.setIdentityName("居民");
+                }else{
+                    loginResult.setStatus(200);                 //登陆成功
+                    loginResult.setId(tbUser2.getId());
+                    loginResult.setIdentity(tbUser2.getIdIdentity());
+                    loginResult.setName("管理员");
+                    loginResult.setIdentityName("");
                 }
             }
             else{

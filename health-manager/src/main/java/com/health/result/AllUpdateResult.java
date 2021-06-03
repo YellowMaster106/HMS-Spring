@@ -8,6 +8,25 @@ public class AllUpdateResult {
     private String phonenumber;
     private String address;
     private int idIdentity;
+    private String keyword;
+    private String identity;
+    private int idHospital;
+
+    public int getIdHospital(){
+        return idHospital;
+    }
+
+    public void setIdHospital(int idHospital){
+        this.idHospital = idHospital;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
 
     public int getIdIdentity() {
         return idIdentity;
@@ -74,5 +93,5 @@ public class AllUpdateResult {
         this.keyword = keyword;
     }
 
-    private String keyword;
+
 }

@@ -45,4 +45,9 @@ public class contentController {
 
         return allUpdateResult;
     }
+
+    @RequestMapping("/insertContent")
+    public void insertContent(@RequestBody TbContent tbContent){
+        contentService.insertContent(tbContent);
+    }
 }

@@ -7,12 +7,14 @@ import com.health.pojo.TbCheck;
 import com.health.pojo.TbDoctor;
 import com.health.pojo.TbUser;
 import com.health.pojo.TbUserExample;
+import com.health.result.AllUpdateResult;
 import com.health.result.LoginResult;
 import com.health.service.checkService;
 import com.health.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,8 +55,17 @@ public class checkServiceImpl implements checkService {
     }
 
     @Override
-    public List<TbCheck> findAllCheck() {
-        return tbCheckMapper.selectByExample(null);
+    public List<AllUpdateResult> findAllCheck() {
+        List<AllUpdateResult> results = new ArrayList<>();
+        List<TbCheck> list = tbCheckMapper.selectByExample(null);
+        for(int i = 0;i < list.size();i++){
+            AllUpdateResult re = new AllUpdateResult();
+            re.setId(list.get(i).getIdDoctor());
+            re.setName(tbDoctorMapper.selectByPrimaryKey(list.get(i).getIdDoctor()).getName());
+            results.add(re);
+        }
+
+        return results;
     }
 
 }
