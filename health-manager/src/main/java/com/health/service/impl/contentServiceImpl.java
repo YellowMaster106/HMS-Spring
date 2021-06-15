@@ -6,6 +6,7 @@ import com.health.service.contentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -31,6 +32,7 @@ public class contentServiceImpl implements contentService {
 
     @Override
     public void insertContent(TbContent tbContent) {
+        tbContent.setDate(new Date());
         tbContentMapper.insert(tbContent);
     }
 

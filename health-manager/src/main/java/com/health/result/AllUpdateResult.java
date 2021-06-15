@@ -12,6 +12,16 @@ public class AllUpdateResult {
     private String identity;
     private int idHospital;
 
+    public String getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(String hospital) {
+        this.hospital = hospital;
+    }
+
+    private String hospital;
+
     public int getIdHospital(){
         return idHospital;
     }

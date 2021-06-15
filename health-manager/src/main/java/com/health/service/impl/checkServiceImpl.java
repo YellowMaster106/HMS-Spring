@@ -2,11 +2,9 @@ package com.health.service.impl;
 
 import com.health.mapper.TbCheckMapper;
 import com.health.mapper.TbDoctorMapper;
+import com.health.mapper.TbHospitalMapper;
 import com.health.mapper.TbUserMapper;
-import com.health.pojo.TbCheck;
-import com.health.pojo.TbDoctor;
-import com.health.pojo.TbUser;
-import com.health.pojo.TbUserExample;
+import com.health.pojo.*;
 import com.health.result.AllUpdateResult;
 import com.health.result.LoginResult;
 import com.health.service.checkService;
@@ -28,6 +26,9 @@ public class checkServiceImpl implements checkService {
 
     @Autowired
     private TbUserMapper tbUserMapper;
+
+    @Autowired
+    private TbHospitalMapper tbHospitalMapper;
 
     @Override
     public int checkDoctor(TbCheck tbCheck) {
@@ -58,10 +59,12 @@ public class checkServiceImpl implements checkService {
     public List<AllUpdateResult> findAllCheck() {
         List<AllUpdateResult> results = new ArrayList<>();
         List<TbCheck> list = tbCheckMapper.selectByExample(null);
+        List<TbHospital> list2 = tbHospitalMapper.selectByExample(null);
         for(int i = 0;i < list.size();i++){
             AllUpdateResult re = new AllUpdateResult();
             re.setId(list.get(i).getIdDoctor());
             re.setName(tbDoctorMapper.selectByPrimaryKey(list.get(i).getIdDoctor()).getName());
+            re.setHospital(tbHospitalMapper.selectByPrimaryKey(list2.get(i).getId()).getName());
             results.add(re);
         }
 
